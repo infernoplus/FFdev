@@ -19,6 +19,11 @@ display.draw = function() {
  display.drawMap();
  display.drawObjects();
  ui.draw();
+ 
+ /* test */
+ input.cursor
+ display.context.fillStyle = "#FF0000";
+ display.context.fillRect(input.cursor.x,input.cursor.y,1,1);
 };
 
 display.update = function() {

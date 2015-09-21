@@ -22,11 +22,11 @@ input.event = function(evt, state) {
 
 input.mouse = function(evt, state) {
  if(state)
-  ui.mouse(evt.layerX-9, evt.layerY-9);
+  ui.mouse(evt.layerX, evt.layerY);
 };
 
 input.mouseMove = function(evt) {
- input.cursor = {x: evt.layerX-9, y: evt.layerY-9};
+ input.cursor = {x: evt.layerX, y: evt.layerY};
 };
 
 input.coordToTileScreenSpace = function(x,y) {

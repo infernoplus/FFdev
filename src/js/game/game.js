@@ -36,6 +36,7 @@ game.init = function() {
  }
 
  game.battle = undefined;
+ console.log(map.pathFind({x: 3, y: 2}, {x: 7, y: 3}));
 };
 
 game.step = function() {

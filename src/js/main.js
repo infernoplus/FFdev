@@ -23,6 +23,7 @@ main.init = function() {
  object.init();
  display.init();
  game.init();
+
  main.step();
 };
 

@@ -209,8 +209,9 @@ object.createPartyMember = function(x,y,f) {
    if(game.inBattle())
     return;
    if(this.follow.lastPos.x !== this.pos.x || this.follow.lastPos.y !== this.pos.y) {
-    var dir = map.pathFind(this.pos, this.follow.lastPos);
-    this.move(dir.x,dir.y);
+    var path = map.pathFind(this.pos, this.follow.lastPos);
+    var dir = util.directionTo(this.pos, {x: path.points[1].x, y: path.points[1].y});
+    this.move(dir.x, dir.y);
    }
   },
   tweening : object.proto.tweening,
@@ -255,9 +256,10 @@ object.createEnemy = function(x,y) {
    if(t !== undefined && t === game.player) {
      game.startBattle(game.player, this);
    }
-   else if(dist < 6) {
-    var dir = util.directionTo(this.pos, game.player.pos);
-    this.move(dir.x, dir.y);
+   else if(dist < 12) {
+	    var path = map.pathFind(this.pos, game.player.pos);
+	    var dir = util.directionTo(this.pos, {x: path.points[1].x, y: path.points[1].y});
+	    this.move(dir.x, dir.y);
    }
    else {
     var r = Math.random();
