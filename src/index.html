@@ -1,18 +1,16 @@
 <html>
   <head>
     <title>
-      Hurdle Durdle
+      FF Dev
     </title>
   </head>
   <body onkeyup="input.event(event,false)" onkeydown="input.event(event, true)">
     <canvas onmousemove="input.mouseMove(event)" onmousedown="input.mouse(event, true)" onmouseup="input.mouse(event, false)" id="canvas" width="640" height="480" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:1px solid #000000;"></canvas>
-    <img height=0 width=0 id="blm_sheet" src="img/character/blm_sheet.png"></img>
-    <img height=0 width=0 id="whm_sheet" src="img/character/whm_sheet.png"></img>
-    <img height=0 width=0 id="pal_sheet" src="img/character/pal_sheet.png"></img>
-    <img height=0 width=0 id="war_sheet" src="img/character/war_sheet.png"></img>
-    <img height=0 width=0 id="menu_sheet" src="img/ui/menu_sheet.png"></img>
+    <input type="file" id="file-input"/>
   </body>
   <script src="js/util/util.js"></script>
+  <script src="js/display/image.js"></script>
+  <script src="js/display/tile.js"></script>
   <script src="js/input/input.js"></script>
   <script src="js/ui/ui.js"></script>
   <script src="js/map/map.js"></script>
