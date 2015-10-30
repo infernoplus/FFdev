@@ -1,34 +1,26 @@
 "use strict";
 
 var map = {};
-
 map.init = function() {
- map.size = {x: 512, y: 512};
- map.tile = ["#23B23B","#32AF47","#2A9F3E","#1E9C33","#453312"];
- map.map = [];
- for(var i=0;i<map.size.x;i++) {
-  map.map[i] = [];
-  for(var j=0;j<map.size.y;j++) {
-   var r = util.rand(4);
-   switch(r) {
-    case 1 : map.map[i][j] = 1; break;
-    case 2 : map.map[i][j] = 2; break;
-    case 3 : map.map[i][j] = 3; break;
-    case 4 : map.map[i][j] = 4; break;
-    default : map.map[i][j] = 0; break;
-   }
-  }
- }
+	map.size = {x: 32, y: 32};
+	map.data = [];
+	for(var i=0;i<map.size.x;i++) {
+		map.data.push([]);
+		for(var j=0;j<map.size.y;j++) {
+			map.data[i].push({x:i, y:j, tile: 0, r:0, c:false, evt: []});
+		}
+	}
 };
 
 map.pathFind = function(a, b) {
- if(util.distance(a,b) > 8) {
+ //if(util.distance(a,b) > 8) {
 	 var path = {points: []};
 	 path.points.push(a);
 	 path.points.push(util.add(a, util.directionTo(a,b)));
 	 return path;
- }
- 
+ //}
+
+/* deprecated path finding
  var protoContains = function(a) {
 	 for(var i=0;i<this.points.length;i++) {
 		 if(this.points[i].x === a.x && this.points[i].y === a.y)
@@ -47,7 +39,7 @@ map.pathFind = function(a, b) {
 	 copy.points.push(a);
 	 return copy;
  };
- 
+
  var paths = [{points: [{x: a.x, y: a.y}], contains: protoContains, last: protoLast, pushCopy: protoPushCopy}];
  var solution;
  for(var i=0;i<12&&solution===undefined;i++) {
@@ -79,13 +71,59 @@ map.pathFind = function(a, b) {
  }
  console.log("Solved");
  return solution;
+ */
 };
 
 map.spaceEmpty = function(a) {
-	if(map.map[a.x][a.y] !== 4) {
+	if(!map.map[a.x][a.y].c) {
 	    if(object.getObjectAtPos(a.x, a.y) == undefined) {
 	    	return true;
 	    }
 	}
 	return false;
 };
+
+map.open = function(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  map.file = undefined;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var r = e.target.result;
+		map.file = r;
+  };
+  reader.readAsText(file);
+
+  //Recursive timeout
+  var opened = function() {
+		if(map.file === undefined) {
+			setTimeout(function() { opened(); }, 500);
+		}
+	  else {
+			//GOTCHA!
+			map.load(map.file);
+			map.file = undefined;
+		}
+	};
+
+	opened();
+};
+
+map.load = function(file) {
+	var ary = file.split("\n");
+	var header = ary[0].split(",");
+
+	map.data = [];
+	map.size = {x: parseInt(header[0]), y: parseInt(header[1])};
+	var k = 1;
+	for(var i=0;i<map.size.x;i++)
+			map.data.push(new Array(map.size.y));
+	for(var j=0;j<map.size.y;j++) {
+		for(var i=0;i<map.size.x;i++) {
+			var tile = ary[k++].split(",");
+			map.data[i][j] = {x: i, y: j, tile: parseInt(tile[0]), r: parseInt(tile[1]), c: tile[2] === "true" ? true : false, evt: []};
+		}
+	}
+}
