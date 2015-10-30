@@ -35,7 +35,7 @@ object.init = function() {
   if(x !== 0)
    if((x > 0 && this.look === 1) || (x < 0 && this.look === 0)) {
     if(this.pos.x+x >= 0 && this.pos.x+x < map.size.x)
-     if(map.map[this.pos.x+x][this.pos.y] != 4)
+     if(!map.data[this.pos.x+x][this.pos.y].c)
       if(object.getObjectAtPos(this.pos.x+x, this.pos.y) == undefined) {
        this.lastPos = {x: this.pos.x, y: this.pos.y};
        this.pos.x += x; this.anim.tween.x -= x; this.look = x < 0 ? 0 : 1; this.anim.moving = true; this.anim.frame = !this.anim.frame;
@@ -46,7 +46,7 @@ object.init = function() {
   else if(y !== 0)
    if((y > 0 && this.look === 3) || (y < 0 && this.look === 2)) {
     if(this.pos.y+y >= 0 && this.pos.y+y < map.size.y)
-     if(map.map[this.pos.x][this.pos.y+y] != 4)
+     if(!map.data[this.pos.x][this.pos.y+y].c)
       if(object.getObjectAtPos(this.pos.x, this.pos.y+y) == undefined) {
        this.lastPos = {x: this.pos.x, y: this.pos.y};
        this.pos.y += y; this.anim.tween.y -= y; this.look = y < 0 ? 2 : 3; this.anim.moving = true; this.anim.frame = !this.anim.frame;
@@ -100,7 +100,7 @@ object.createPlayer = function(x,y) {
   atk : [{name: "Fast Strike", potency: 50}, {name: "Heavy Strike", potency: 65}],
   mag : [{name: "Fire I", potency: 170}, {name: "Ice I", potency: 120}, {name: "Thunder I", potency: 50}],
   anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-  tile : document.getElementById("blm_sheet"),
+  tile : image.get('img/character/blm.png'),
   battle : false,
   dead : false,
   name : "Vivi",
@@ -153,7 +153,7 @@ object.createNpc = function(x,y) {
   atk : [{name: "Fast Blade", potency: 100}, {name: "Riot Blade", potency: 220}, {name: "Rage of Halone", potency: 300}],
   mag : [{name: "Flash", potency: 5}, {name: "Cure I", potency: 100}],
   anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-  tile : document.getElementById("pal_sheet"),
+  tile : image.get('img/character/pld.png'),
   name : "Dave",
   message : "Hello I am a default npc.",
   battle : false,
@@ -196,8 +196,8 @@ object.createPartyMember = function(x,y,f) {
   mag : [{name: "Cure I", potency: 100}, {name: "Dia I", potency: 30}, {name: "Protect", potency: 0}],
   follow : f,
   anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-  tile : document.getElementById("whm_sheet"),
-  name : "Ella",
+  tile : image.get('img/character/whm.png'),
+  name : "Default Name",
   message : "Hello. I'm in your party!",
   battle : false,
   dead : false,
@@ -233,7 +233,7 @@ object.createEnemy = function(x,y) {
   atk : [{name: "Heavy Swing", potency: 120}, {name: "Skull Sunder", potency: 200}, {name: "Overpower", potency: 75}, {name: "Fracture", potency: 40}],
   mag : [{name: "Provoke", potency: 5}],
   anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-  tile : document.getElementById("war_sheet"),
+  tile : image.get('img/character/war.png'),
   name : "Bob",
   message : "Hello, I'm going to kill you!",
   battle : false,
