@@ -142,7 +142,7 @@ ui.init = function() {
  };
 
  ui.battle = {
-  tile: document.getElementById("menu_sheet"),
+  tile: image.get('img/ui/menu.png'),
   openTab: undefined,
   proto: {
    listSelect: function(x,y,ary) {
