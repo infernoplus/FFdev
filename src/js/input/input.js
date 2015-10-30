@@ -7,6 +7,8 @@ input.init = function() {
  input.keys = [];
  for(var i=0;i<256;i++)
   input.keys[i] = false;
+
+ document.getElementById('file-input').addEventListener('change', map.open, false);
 };
 
 input.event = function(evt, state) {
