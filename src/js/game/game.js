@@ -5,13 +5,13 @@ var game = {};
 game.init = function() {
  game.objects = [];
 
- map.map[3][3] = 0;
- map.map[3][4] = 0;
- map.map[3][5] = 0;
- map.map[3][6] = 0;
+ map.data[3][3].c = false;
+ map.data[3][4].c = false;
+ map.data[3][5].c = false;
+ map.data[3][6].c = false;
 
  game.player = object.createPlayer(3,3);
- var pma = object.createPartyMember(3,4,game.player);
+ var pma = object.createPartyMember(3,4,game.player); pma.name = "Ella";
  var pmb = object.createPartyMember(3,5,pma); pmb.name = "Yuna";
  var pmc = object.createPartyMember(3,6,pmb); pmc.name = "Vanille";
  game.objects.push(game.player);
@@ -21,14 +21,14 @@ game.init = function() {
 
  game.party = [game.player, pma, pmb, pmc];
 
- for(var i=0;i<1024;i++) {
+ for(var i=0;i<8;i++) {
   var x = parseInt(Math.random()*map.size.x);
   var y = parseInt(Math.random()*map.size.y);
   var npc = object.createNpc(x,y);
   game.objects.push(npc);
  }
 
- for(var i=0;i<1024;i++) {
+ for(var i=0;i<3;i++) {
   var x = parseInt(Math.random()*map.size.x);
   var y = parseInt(Math.random()*map.size.y);
   var emy = object.createEnemy(x,y);
@@ -36,7 +36,6 @@ game.init = function() {
  }
 
  game.battle = undefined;
- console.log(map.pathFind({x: 3, y: 2}, {x: 7, y: 3}));
 };
 
 game.step = function() {
