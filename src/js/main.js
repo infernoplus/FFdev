@@ -16,15 +16,19 @@ var requestAnimFrame = (function(){
 var main = {};
 
 main.init = function() {
- util.init();
- input.init();
- ui.init();
- map.init();
- object.init();
- display.init();
- game.init();
 
- main.step();
+ image.init();
+ image.onReady( function() {
+  util.init();
+  input.init();
+  tile.init();
+  ui.init();
+  map.init();
+  object.init();
+  display.init();
+  game.init();
+  main.step();
+ });
 };
 
 main.lastTime = 0;
