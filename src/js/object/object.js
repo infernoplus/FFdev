@@ -1,84 +1,10 @@
 "use strict";
 
 var object = {};
-object.proto = {};
+object.types = {};
 
 object.init = function() {
- object.proto.moving = false;
- object.proto.pos = {x: 0, y: 0};
- object.proto.lastPos = {x: 0, y: 0};
- object.proto.look = 0;
- object.proto.tile = undefined;
- object.proto.anim = {frame: false, moving: false, tween: {x: 0, y: 0}};
- object.proto.dead = false;
- object.proto.stat = {hp: 10, maxHp: 10};
- object.proto.attr = {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10};
 
- object.proto.tweening = function() {
-  if(this.anim.tween.x < 0)
-   this.anim.tween.x += 0.33;
-  if(this.anim.tween.x > 0)
-   this.anim.tween.x -= 0.33;
-  if(this.anim.tween.y < 0)
-   this.anim.tween.y += 0.33;
-  if(this.anim.tween.y > 0)
-   this.anim.tween.y -= 0.33;
-  if(Math.abs(this.anim.tween.x) < 0.1 && Math.abs(this.anim.tween.y) < 0.1) {
-   this.anim.tween = {x: 0, y: 0};
-   this.anim.moving = false;
-  }
- };
-
- object.proto.move = function(x,y) {
-  if(this.anim.moving)
-   return;
-  if(x !== 0)
-   if((x > 0 && this.look === 1) || (x < 0 && this.look === 0)) {
-    if(this.pos.x+x >= 0 && this.pos.x+x < map.size.x)
-     if(!map.data[this.pos.x+x][this.pos.y].c)
-      if(object.getObjectAtPos(this.pos.x+x, this.pos.y) == undefined) {
-       this.lastPos = {x: this.pos.x, y: this.pos.y};
-       this.pos.x += x; this.anim.tween.x -= x; this.look = x < 0 ? 0 : 1; this.anim.moving = true; this.anim.frame = !this.anim.frame;
-     }
-   }
-   else
-    this.look = x < 0 ? 0 : 1;
-  else if(y !== 0)
-   if((y > 0 && this.look === 3) || (y < 0 && this.look === 2)) {
-    if(this.pos.y+y >= 0 && this.pos.y+y < map.size.y)
-     if(!map.data[this.pos.x][this.pos.y+y].c)
-      if(object.getObjectAtPos(this.pos.x, this.pos.y+y) == undefined) {
-       this.lastPos = {x: this.pos.x, y: this.pos.y};
-       this.pos.y += y; this.anim.tween.y -= y; this.look = y < 0 ? 2 : 3; this.anim.moving = true; this.anim.frame = !this.anim.frame;
-      }
-   }
-   else
-    this.look = y < 0 ? 2 : 3;
- };
-
- object.proto.lookAt = function(x,y) {
-  if(Math.abs(x) > Math.abs(y))
-   this.look = x < 0 ? 0 : 1;
-  else
-   this.look = y < 0 ? 2 : 3;
- };
-
- object.proto.draw = function(w,h) {
-  var x = this.pos.x + this.anim.tween.x - game.player.pos.x + parseInt(w/2) - game.player.anim.tween.x;
-  var y = this.pos.y + this.anim.tween.y - game.player.pos.y + parseInt(h/2) - game.player.anim.tween.y;
-  var si = (this.look*2) + (this.anim.frame ? 1 : 0);
-  display.context.drawImage(this.tile, si*16, 0, 16, 16, x*display.scale,y*display.scale,display.scale,display.scale);
- };
-
- object.proto.damage = function(x) {
-  this.stat.hp -= x;
-  if(this.stat.hp <= 0)
-   this.kill();
- };
-
- object.proto.kill = function() {
-  this.dead = true;
- };
 };
 
 object.getObjectAtPos = function(x,y) {
@@ -90,59 +16,7 @@ object.getObjectAtPos = function(x,y) {
  return undefined;
 };
 
-object.createPlayer = function(x,y) {
- return {
-  pos : {x: x, y: y},
-  lastPos : {x: x, y: y},
-  look : 0,
-  attr : {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10},
-  stat : {hp: 10, maxHp: 10},
-  atk : [{name: "Fast Strike", potency: 50}, {name: "Heavy Strike", potency: 65}],
-  mag : [{name: "Fire I", potency: 170}, {name: "Ice I", potency: 120}, {name: "Thunder I", potency: 50}],
-  anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-  tile : image.get('img/character/blm.png'),
-  battle : false,
-  dead : false,
-  name : "Vivi",
-  step : function() {
-   this.tweening();
-   this.input();
-  },
-  tweening : object.proto.tweening,
-  input : function() {
-   if(ui.isActive() || game.inBattle())
-    return;
-   var x=0,y=0;
-   if(input.keys[87])
-    y--;
-   if(input.keys[83])
-    y++;
-   if(input.keys[65])
-    x--;
-   if(input.keys[68])
-    x++;
-   this.move(x,y);
-
-   if(input.keys[69]) {
-    var t;
-    switch(this.look) {
-     case 0 : t = object.getObjectAtPos(this.pos.x-1,this.pos.y); break;
-     case 1 : t = object.getObjectAtPos(this.pos.x+1,this.pos.y); break;
-     case 2 : t = object.getObjectAtPos(this.pos.x,this.pos.y-1); break;
-     default : t = object.getObjectAtPos(this.pos.x,this.pos.y+1); break;
-    }
-    if(t !== undefined)
-     ui.openChat(t.name, t.message);
-   }
-  },
-  move : object.proto.move,
-  lookAt : object.proto.lookAt,
-  damage : object.proto.damage,
-  kill : object.proto.kill,
-  draw : object.proto.draw
- };
-};
-
+/*
 object.createNpc = function(x,y) {
  return {
   pos : {x: x, y: y},
@@ -282,5 +156,6 @@ object.createEnemy = function(x,y) {
   draw : object.proto.draw
  };
 };
+*/
 
 /*********************************************/
