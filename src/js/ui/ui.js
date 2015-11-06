@@ -8,6 +8,14 @@ ui.init = function() {
  ui.font = {sml: "12px Lucida Console", reg: "14px Lucida Console", lrg: "20px Lucida Console"};
  ui.color = {blue: "#1111FF", white: "#EEEEFF"};
 
+ ui.load = {
+	 draw: function() {
+		 display.context.fillStyle = ui.color.white;
+		 display.context.font = ui.font.lrg;
+		 display.context.fillText("Loading...",0,0);
+	 }
+ };
+
  ui.menu = {
   openTab: undefined,
   tabs: [
@@ -194,13 +202,13 @@ ui.init = function() {
     var w = parseInt(display.width/display.scale);
     var h = parseInt(display.height/display.scale);
 
-    var x = game.player.pos.x - parseInt(w/2) + game.player.anim.tween.x;
-    var y = game.player.pos.y - parseInt(h/2) + game.player.anim.tween.y;
+    var x = player.npc.pos.x - parseInt(w/2) + player.npc.anim.tween.x;
+    var y = player.npc.pos.y - parseInt(h/2) + player.npc.anim.tween.y;
 
-    var a = game.player.pos.x-w >= 0 ? game.player.pos.x-w : 0;
-    var b = game.player.pos.y-h >= 0 ? game.player.pos.y-h : 0;
-    var c = game.player.pos.x+w < map.size.x ? game.player.pos.x+w : map.size.x;
-    var d = game.player.pos.y+h < map.size.y ? game.player.pos.y+h : map.size.y;
+    var a = player.npc.pos.x-w >= 0 ? player.npc.pos.x-w : 0;
+    var b = player.npc.pos.y-h >= 0 ? player.npc.pos.y-h : 0;
+    var c = player.npc.pos.x+w < map.size.x ? player.npc.pos.x+w : map.size.x;
+    var d = player.npc.pos.y+h < map.size.y ? player.npc.pos.y+h : map.size.y;
 
     for(var i=0;i<ary.length;i++) {
      display.context.fillStyle = ui.color.blue;
