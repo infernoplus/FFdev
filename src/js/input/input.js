@@ -8,7 +8,7 @@ input.init = function() {
  for(var i=0;i<256;i++)
   input.keys[i] = false;
 
- document.getElementById('file-input').addEventListener('change', map.open, false);
+ document.getElementById('file-input').addEventListener('change', map.openDebug, false);
 };
 
 input.event = function(evt, state) {
@@ -39,13 +39,13 @@ input.coordToTile = function(x,y) {
  var w = parseInt(display.width/display.scale);
  var h = parseInt(display.height/display.scale);
 
- var i = game.player.pos.x - parseInt(w/2) + game.player.anim.tween.x;
- var j = game.player.pos.y - parseInt(h/2) + game.player.anim.tween.y;
+ var i = player.npc.pos.x - parseInt(w/2) + player.npc.anim.tween.x;
+ var j = player.npc.pos.y - parseInt(h/2) + player.npc.anim.tween.y;
 
- var a = game.player.pos.x-w >= 0 ? game.player.pos.x-w : 0;
- var b = game.player.pos.y-h >= 0 ? game.player.pos.y-h : 0;
- var c = game.player.pos.x+w < map.size.x ? game.player.pos.x+w : map.size.x;
- var d = game.player.pos.y+h < map.size.y ? game.player.pos.y+h : map.size.y;
+ var a = player.npc.pos.x-w >= 0 ? player.npc.pos.x-w : 0;
+ var b = player.npc.pos.y-h >= 0 ? player.npc.pos.y-h : 0;
+ var c = player.npc.pos.x+w < map.size.x ? player.npc.pos.x+w : map.size.x;
+ var d = player.npc.pos.y+h < map.size.y ? player.npc.pos.y+h : map.size.y;
 
  return {x: parseInt((x/display.scale)+i), y: parseInt((y/display.scale)+j)};
 };
