@@ -1,6 +1,7 @@
 "use strict";
 
 var map = {};
+map.maps = {};
 map.init = function() {
 	map.size = {x: 32, y: 32};
 	map.data = [];
@@ -83,7 +84,14 @@ map.spaceEmpty = function(a) {
 	return false;
 };
 
-map.open = function(e) {
+//Open map through engine
+map.open = function(name) {
+	game.loadingMap = true;
+	map.httpGet(map.maps[name].file);
+};
+
+//Open map through debug
+map.openDebug = function(e) {
   var file = e.target.files[0];
   if (!file) {
     return;
@@ -105,9 +113,11 @@ map.open = function(e) {
 			//GOTCHA!
 			map.load(map.file);
 			map.file = undefined;
+			game.loadingMap = false;
 		}
 	};
 
+	game.loadingMap = true;
 	opened();
 };
 
@@ -126,4 +136,25 @@ map.load = function(file) {
 			map.data[i][j] = {x: i, y: j, tile: parseInt(tile[0]), r: parseInt(tile[1]), c: tile[2] === "true" ? true : false, evt: []};
 		}
 	}
-}
+};
+
+/** Bad deprecated code that needs to be replaced. Likely with jquery */
+map.httpGet = function(theUrl) {
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	   	map.load(xmlhttp.responseText);
+   		game.loadingMap = false;
+	  }
+	}
+	xmlhttp.open("GET", theUrl);
+	xmlhttp.send();
+};
