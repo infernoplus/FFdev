@@ -4,38 +4,39 @@ var game = {};
 
 game.init = function() {
  game.objects = [];
+ game.loading = false;
+ game.loadMap("test");
 
- map.data[3][3].c = false;
- map.data[3][4].c = false;
- map.data[3][5].c = false;
- map.data[3][6].c = false;
-
- game.player = object.createPlayer(3,3);
- var pma = object.createPartyMember(3,4,game.player); pma.name = "Ella";
- var pmb = object.createPartyMember(3,5,pma); pmb.name = "Yuna";
- var pmc = object.createPartyMember(3,6,pmb); pmc.name = "Vanille";
- game.objects.push(game.player);
+ player.npc = object.types.npc.blm.create({x:3,y:3}, 0, ai.none, "Vivi");
+ var pma = object.types.npc.blm.create({x:3,y:4}, 0, ai.wander, "Ella");
+ var pmb = object.types.npc.blm.create({x:3,y:5}, 0, ai.wander, "Yuna");
+ var pmc = object.types.npc.blm.create({x:3,y:6}, 0, ai.wander, "Vanille");
+ game.objects.push(player.npc);
  game.objects.push(pma);
  game.objects.push(pmb);
  game.objects.push(pmc);
 
- game.party = [game.player, pma, pmb, pmc];
+ game.party = [player.npc, pma, pmb, pmc];
 
  for(var i=0;i<8;i++) {
   var x = parseInt(Math.random()*map.size.x);
   var y = parseInt(Math.random()*map.size.y);
-  var npc = object.createNpc(x,y);
+  var npc = object.types.npc.blm.create({x:x,y:y}, 0, ai.wander, "Nice Guy");
   game.objects.push(npc);
  }
 
  for(var i=0;i<3;i++) {
   var x = parseInt(Math.random()*map.size.x);
   var y = parseInt(Math.random()*map.size.y);
-  var emy = object.createEnemy(x,y);
+  var emy = object.types.npc.blm.create({x:x,y:y}, 0, ai.wander, "Mean Guy");
   game.objects.push(emy);
  }
 
  game.battle = undefined;
+};
+
+game.loadMap = function(name) {
+	map.open(name);
 };
 
 game.step = function() {
@@ -47,6 +48,7 @@ game.step = function() {
    i--;
   }
  }
+ player.step();
  for(var i=0;i<game.objects.length;i++) {
   game.objects[i].step();
  }
