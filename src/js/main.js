@@ -22,6 +22,7 @@ main.init = function() {
   util.init();
   input.init();
   tile.init();
+  player.init();
   ui.init();
   map.init();
   object.init();
@@ -37,8 +38,9 @@ main.step = function() {
 
  if(now - main.lastTime > 33) {
   main.lastTime = now;
-  game.step();
-  display.draw();
+
+  if(game.loadingMap) { display.drawLoading(); }
+  else { display.draw(); game.step(); }
  }
 
  requestAnimFrame(function() { main.step(); });
