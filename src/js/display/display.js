@@ -13,6 +13,10 @@ display.init = function() {
  display.scale = 16; //Drawing scale
 };
 
+display.drawLoading = function() {
+	ui.load.draw();
+};
+
 display.draw = function() {
  display.update();
 
@@ -22,9 +26,9 @@ display.draw = function() {
  ui.draw();
 
  /* test */
- input.cursor
- display.context.fillStyle = "#FF0000";
- display.context.fillRect(input.cursor.x,input.cursor.y,1,1);
+// input.cursor
+// display.context.fillStyle = "#FF0000";
+// display.context.fillRect(input.cursor.x,input.cursor.y,1,1);
 };
 
 display.update = function() {
@@ -37,8 +41,8 @@ display.update = function() {
  var w = parseInt(display.width/display.scale);
  var h = parseInt(display.height/display.scale);
 
- var x = game.player.pos.x - parseInt(w/2) + game.player.anim.tween.x;
- var y = game.player.pos.y - parseInt(h/2) + game.player.anim.tween.y;
+ var x = player.npc.pos.x - parseInt(w/2) + player.npc.anim.tween.x;
+ var y = player.npc.pos.y - parseInt(h/2) + player.npc.anim.tween.y;
 
  display.offset = {x: (x*display.scale)-(display.scale/2), y: (y*display.scale)-(display.scale/2)};
 
