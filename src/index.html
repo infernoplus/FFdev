@@ -4,20 +4,31 @@
       FF Dev
     </title>
   </head>
-  <body onkeyup="input.event(event,false)" onkeydown="input.event(event, true)">
-    <canvas onmousemove="input.mouseMove(event)" onmousedown="input.mouse(event, true)" onmouseup="input.mouse(event, false)" id="canvas" width="640" height="480" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:1px solid #000000;"></canvas>
-    <input type="file" id="file-input"/>
-  </body>
+
+  <!-- Initial core -->
   <script src="js/util/util.js"></script>
   <script src="js/display/image.js"></script>
   <script src="js/display/tile.js"></script>
   <script src="js/input/input.js"></script>
+  <script src="js/game/player.js"></script>
   <script src="js/ui/ui.js"></script>
+  <script src="js/ai/ai.js"></script>
+  <!-- Map Resource List -->
   <script src="js/map/map.js"></script>
+  <script src="js/map/test/test.js"></script>
+  <!-- Object Resource List -->
   <script src="js/object/object.js"></script>
+  <script src="js/object/npc/prototype.js"></script>
+  <script src="js/object/npc/blm.js"></script>
+  <script src="js/object/npc/whm.js"></script>
+  <!-- Final core -->
   <script src="js/display/display.js"></script>
   <script src="js/game/game.js"></script>
+  <!-- Initialize Engine -->
   <script src="js/main.js"></script>
-</html>
 
-<!-- IMG RESOURCES ARE OUT OF DATE --!>
+  <body onkeyup="input.event(event,false)" onkeydown="input.event(event, true)">
+    <canvas onmousemove="input.mouseMove(event)" onmousedown="input.mouse(event, true)" onmouseup="input.mouse(event, false)" id="canvas" width="640" height="480" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:1px solid #000000;"></canvas>
+    <input type="file" id="file-input"/>
+  </body>
+</html>
