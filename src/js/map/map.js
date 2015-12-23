@@ -3,8 +3,12 @@
 var map = {};
 map.maps = {};
 map.init = function() {
-	map.size = {x: 32, y: 32};
-	map.data = [];
+	map.evt = []; //Event pallete
+	map.obj = []; //Object pallete
+
+	map.size = {x: 32, y: 32}; //Map bounds
+	map.data = []; //Map tile data
+
 	for(var i=0;i<map.size.x;i++) {
 		map.data.push([]);
 		for(var j=0;j<map.size.y;j++) {
@@ -87,10 +91,10 @@ map.spaceEmpty = function(a) {
 //Open map through engine
 map.open = function(name) {
 	game.loadingMap = true;
-	map.httpGet(map.maps[name].file);
+	map.httpGet(map.maps[name]);
 };
 
-//Open map through debug
+//Open map through debug /* DEPRECATED - NEEDS REMOVAL */
 map.openDebug = function(e) {
   var file = e.target.files[0];
   if (!file) {
@@ -121,25 +125,115 @@ map.openDebug = function(e) {
 	opened();
 };
 
-map.load = function(file) {
-	var ary = file.split("\n");
-	var header = ary[0].split(",");
-
+map.load = function(mapData, file) {
+	map.size = {};
 	map.data = [];
-	map.size = {x: parseInt(header[0]), y: parseInt(header[1])};
-	var k = 1;
-	for(var i=0;i<map.size.x;i++)
+	map.evt = [];
+	map.obj = [];
+
+	var ary = file.split("\n");
+	var k = 0; //Line number
+
+  //Parse evt palette
+	var evtHeader = parseInt(ary[k++]);
+	for(var i=0;i<evtHeader;i++) {
+		var evt = ary[k++].split(",");
+		map.evt.push({
+			id: evt[0],
+			func: mapData.evt[evt[1]] ? mapData.evt[evt[1]] : (script.evt[evt[1]] ? script.evt[evt[1]] : script.evt.none),
+			type: evt[2]
+		});
+	}
+
+	//Parse obj palette
+	var objHeader = parseInt(ary[k++]);
+	for(var i=0;i<objHeader;i++) {
+		var obj = ary[k++].split(",");
+		map.obj.push({
+			id: obj[0],
+			name: obj[1],
+			color: obj[2],
+			sym: obj[3],
+			type: obj[4],
+			dname: obj[5],
+			variant: parseInt(obj[6]),
+			lvl: parseInt(obj[7]),
+			team: parseInt(obj[8]),
+			faction: parseInt(obj[9]),
+			aiWorld: mapData.world[obj[10]] ? mapData.world[obj[10]] : (ai.world[obj[10]] ? ai.world[obj[10]] : ai.world.none), //TODO: Warn or error?
+			aiBattle: mapData.battle[obj[11]] ? mapData.battle[obj[11]] : (ai.battle[obj[11]] ? ai.battle[obj[11]] : ai.battle.random), // ^^
+			func: mapData.func[obj[12]] ? mapData.func[obj[12]] : (script.func[obj[12]] ? script.func[obj[12]] : script.func.none)                  // ^^
+		});
+	}
+
+	//Parse tile data
+	var tileHeader = ary[k++].split(",");
+	map.size = {x: parseInt(tileHeader[0]), y: parseInt(tileHeader[1])};
+	for(var i=0;i<map.size.x;i++) {
 			map.data.push(new Array(map.size.y));
+  }
 	for(var j=0;j<map.size.y;j++) {
 		for(var i=0;i<map.size.x;i++) {
-			var tile = ary[k++].split(",");
-			map.data[i][j] = {x: i, y: j, tile: parseInt(tile[0]), r: parseInt(tile[1]), c: tile[2] === "true" ? true : false, evt: []};
+			var line = ary[k++];
+			var tile = line.split(",");
+			var evt = line.split("[")[1].split("]")[0].split(",");
+			var resolved = [];
+			for(var l=0;l<evt.length;l++) {
+				resolved.push(map.getEvtPalleteById(evt[l]));
+			}
+			map.data[i][j] = {x: i, y: j, tile: parseInt(tile[0]), r: parseInt(tile[1]), c: tile[2] === "true" ? true : false, evt: evt[0] !== "" ? resolved : []}; //TODO: actually parse EVT
 		}
+	}
+
+	//Parse obj data
+	var objDataHeader = parseInt(ary[k++]);
+	for(var i=0;i<objDataHeader;i++) {
+		var objData = ary[k++].split(",");
+		var p = map.getObjPalleteById(objData[0]);
+
+		var type = object.types; //TODO: Warn or error if missing?
+		var parseType = p.type.split(".");
+		for(var j=0;j<parseType.length;j++) {
+			type = type[parseType[j]];
+		}
+
+    var npc = type.create({
+			x: parseInt(objData[1]), y: parseInt(objData[2])},
+			parseInt(objData[3]),
+			p.dname,
+			p.variant,
+			p.lvl,
+			p.team,
+			p.faction,
+			p.aiWorld,
+			p.aiBattle,
+			p.func,
+			objData[4]
+		);
+    game.objects.push(npc);
 	}
 };
 
+map.getObjPalleteById = function(id) {
+	for(var i=0;i<map.obj.length;i++) {
+		if(map.obj[i].id === id) {
+			return map.obj[i];
+		}
+	}
+	return undefined; //TODO: Warn or error?
+};
+
+map.getEvtPalleteById = function(id) {
+	for(var i=0;i<map.evt.length;i++) {
+		if(map.evt[i].id === id) {
+			return map.evt[i];
+		}
+	}
+	return undefined; //TODO: Warn or error?
+};
+
 /** Bad deprecated code that needs to be replaced. Likely with jquery */
-map.httpGet = function(theUrl) {
+map.httpGet = function(mapData) {
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -151,10 +245,10 @@ map.httpGet = function(theUrl) {
 	}
 	xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-	   	map.load(xmlhttp.responseText);
+	   	map.load(mapData, xmlhttp.responseText);
    		game.loadingMap = false;
 	  }
 	}
-	xmlhttp.open("GET", theUrl);
+	xmlhttp.open("GET", mapData.file);
 	xmlhttp.send();
 };

@@ -16,9 +16,14 @@ object.types.npc.proto.selfInit = function() {
    this.anim.tween.y += 0.33;
   if(this.anim.tween.y > 0)
    this.anim.tween.y -= 0.33;
-  if(Math.abs(this.anim.tween.x) < 0.1 && Math.abs(this.anim.tween.y) < 0.1) {
+  if(this.anim.moving && Math.abs(this.anim.tween.x) < 0.1 && Math.abs(this.anim.tween.y) < 0.1) {
    this.anim.tween = {x: 0, y: 0};
    this.anim.moving = false;
+   //We check for evt triggers after we finish stepping onto a new tile.
+   var tile = map.data[this.pos.x][this.pos.y];
+   for(var i=0;i<tile.evt.length;i++) {
+		 tile.evt[i].func(this);
+	 }
   }
  };
 

@@ -29,6 +29,6 @@ player.step = function() {
 	 default : t = object.getObjectAtPos(player.npc.pos.x,player.npc.pos.y+1); break;
 	}
 	if(t !== undefined)
-	 ui.openChat(t.name, t.message);
+	 t.func(player.npc);
  }
 };

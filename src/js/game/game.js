@@ -7,30 +7,22 @@ game.init = function() {
  game.loading = false;
  game.loadMap("test");
 
- player.npc = object.types.npc.blm.create({x:3,y:3}, 0, ai.none, "Vivi");
- var pma = object.types.npc.blm.create({x:3,y:4}, 0, ai.wander, "Ella");
- var pmb = object.types.npc.blm.create({x:3,y:5}, 0, ai.wander, "Yuna");
- var pmc = object.types.npc.blm.create({x:3,y:6}, 0, ai.wander, "Vanille");
+
+ player.npc = object.types.npc.blm.create({x:1,y:2}, 0, "Vivi", 0, 1, 0, 0, ai.world.none, ai.battle.none, script.func.none, "__plr");
+ var pma = object.types.npc.whm.create({x:1,y:3}, 0, "Ella", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pma");
+ var pmb = object.types.npc.whm.create({x:1,y:5}, 0, "Yuna", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pmb");
+ var pmc = object.types.npc.whm.create({x:1,y:6}, 0, "Vanille", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pmc");
+
+ pma.aiTarget = player.npc;
+ pmb.aiTarget = pma;
+ pmc.aiTarget = pmb;
+
  game.objects.push(player.npc);
  game.objects.push(pma);
  game.objects.push(pmb);
  game.objects.push(pmc);
 
  game.party = [player.npc, pma, pmb, pmc];
-
- for(var i=0;i<8;i++) {
-  var x = parseInt(Math.random()*map.size.x);
-  var y = parseInt(Math.random()*map.size.y);
-  var npc = object.types.npc.blm.create({x:x,y:y}, 0, ai.wander, "Nice Guy");
-  game.objects.push(npc);
- }
-
- for(var i=0;i<3;i++) {
-  var x = parseInt(Math.random()*map.size.x);
-  var y = parseInt(Math.random()*map.size.y);
-  var emy = object.types.npc.blm.create({x:x,y:y}, 0, ai.wander, "Mean Guy");
-  game.objects.push(emy);
- }
 
  game.battle = undefined;
 };
