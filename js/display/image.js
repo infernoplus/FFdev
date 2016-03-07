@@ -8,7 +8,7 @@ image.init = function() {
   image.readyCalls = [];
 
 	image.load([
-			'img/tile/basic.png',
+			'img/tile/test.png',
 			'img/character/blm.png',
 			'img/character/blm_red.png',
 			'img/character/pld.png',
