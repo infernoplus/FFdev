@@ -2,11 +2,6 @@
 
 map.maps.test = {
 	file: "js/map/test/test.map",
-	//Map specific events
-	evt: {
-		testTeleportOne: function(t) { t.lastPos = t.pos; t.pos = {x: 2, y: 2}; },
-		testDialouge: function(t) { ui.openChat("The Floor", "Owww! Why did you step on me jerk!"); }
-	},
 	//Map specific world ai types
 	world: {
 
@@ -14,6 +9,11 @@ map.maps.test = {
 	//Map specific battle ai types
 	battle: {
 
+	},
+	//Map specific events
+	evt: {
+		testTeleportOne: function(t) { t.lastPos = t.pos; t.pos = {x: 2, y: 2}; },
+		testDialouge: function(t) { ui.openChat("The Floor", "Owww! Why did you step on me jerk!"); }
 	},
 	//Map specific obj functions
 	func: {

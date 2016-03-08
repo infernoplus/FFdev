@@ -4,34 +4,61 @@ var game = {};
 
 game.init = function() {
  game.objects = [];
- game.loading = false;
- game.loadMap("test");
+ game.load = {
+		 queued: undefined,
+		 timer: 0
+ }
 
-
- player.npc = object.types.npc.blm.create({x:1,y:2}, 0, "Vivi", 0, 1, 0, 0, ai.world.none, ai.battle.none, script.func.none, "__plr");
- var pma = object.types.npc.whm.create({x:1,y:3}, 0, "Ella", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pma");
- var pmb = object.types.npc.whm.create({x:1,y:5}, 0, "Yuna", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pmb");
- var pmc = object.types.npc.whm.create({x:1,y:6}, 0, "Vanille", 0, 1, 0, 0, ai.world.follow, ai.battle.none, script.func.none, "__pmc");
-
- pma.aiTarget = player.npc;
- pmb.aiTarget = pma;
- pmc.aiTarget = pmb;
-
- game.objects.push(player.npc);
- game.objects.push(pma);
- game.objects.push(pmb);
- game.objects.push(pmc);
-
- game.party = [player.npc, pma, pmb, pmc];
-
+ var pma = object.types.npc.blm.create({x:0,y:0}, 0, "Vivi", 0, 1, 0, 0, ai.world.none(), ai.battle.none(), script.func.none, "pma");
+ var pmb = object.types.npc.whm.create({x:0,y:1}, 0, "Ella", 0, 1, 0, 0, ai.world.follow("pma"), ai.battle.none(), script.func.none, "pmb");
+ var pmc = object.types.npc.whm.create({x:0,y:2}, 0, "Yuna", 0, 1, 0, 0, ai.world.follow("pmb"), ai.battle.none(), script.func.none, "pmc");
+ var pmd = object.types.npc.whm.create({x:0,y:3}, 0, "Vanille", 0, 1, 0, 0, ai.world.follow("pmc"), ai.battle.none(), script.func.none, "pmd");
+ player.npc = pma;
+ game.party = [pma, pmb, pmc, pmd];
+ 
  game.battle = undefined;
+ 
+ game.loadMap("test_lake", {x: 28, y: 4}, 0);
 };
 
-game.loadMap = function(name) {
+game.queueLoadMap = function(name, pos, dir) {
+	game.load.queued = {name: name, pos: pos, dir: dir};
+};
+
+game.loadUpdate = function() {
+	if(game.load.timer >= 100 && game.load.queued) {
+		game.loadMap(game.load.queued.name, game.load.queued.pos, game.load.queued.dir);
+		game.load.queued = undefined;
+	}
+	else if(game.load.queued) {
+		game.load.timer+=5;
+	}
+	else if(game.load.timer > 0) {
+		game.load.timer-=5;
+	}
+};
+
+game.isLoading = function() {
+	return game.load.timer !== 0;
+}
+
+game.loadMap = function(name, pos, dir) {
+	game.battle = undefined;
+	game.objects.splice(0,game.objects.length);
 	map.open(name);
+    for(var i=0;i<game.party.length;i++) {
+    	game.objects.push(game.party[i]);
+    	switch(dir) {
+    		case 1 : { game.party[i].pos = {x: pos.x+i, y: pos.y}; game.party[i].lastPos = {x: pos.x+i, y: pos.y}; break; }
+    		case 2 : { game.party[i].pos = {x: pos.x-1, y: pos.y}; game.party[i].lastPos = {x: pos.x-i, y: pos.y+i}; break; }
+    		case 3 : { game.party[i].pos = {x: pos.x, y: pos.y-i}; game.party[i].lastPos = {x: pos.x, y: pos.y-i}; break; }
+    		default : { game.party[i].pos = {x: pos.x, y: pos.y+i}; game.party[i].lastPos = {x: pos.x, y: pos.y+i}; break; }
+    	}
+	}
 };
 
 game.step = function() {
+  game.loadUpdate();
  if(game.inBattle())
   game.battle.step();
  for(var i=0;i<game.objects.length;i++) {

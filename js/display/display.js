@@ -13,10 +13,6 @@ display.init = function() {
  display.scale = 16; //Drawing scale
 };
 
-display.drawLoading = function() {
-	ui.load.draw();
-};
-
 display.draw = function() {
  display.update();
 
@@ -24,6 +20,7 @@ display.draw = function() {
  display.drawMap();
  display.drawObjects();
  ui.draw();
+ display.drawLoad();
 
  /* test */
 // input.cursor
@@ -32,8 +29,8 @@ display.draw = function() {
 };
 
 display.update = function() {
- display.canvas.width = window.innerWidth-36;
- display.canvas.height = window.innerHeight-36;
+ display.canvas.width = window.innerWidth-24;
+ display.canvas.height = window.innerHeight-24;
 
  display.width = display.canvas.width;
  display.height = display.canvas.height;
@@ -101,7 +98,7 @@ display.drawMap = function() {
 	  	case 3 : display.context.rotate(270*Math.PI/180); break;
 		}
 		//display.context.drawImage(window.tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, (i*display.scale)-display.offset.x, (j*display.scale)-display.offset.y, display.scale, display.scale);
-  	display.context.drawImage(tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, -(display.scale/2), -(display.scale/2), display.scale, display.scale);
+  	display.context.drawImage(tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, -(display.scale/2), -(display.scale/2), display.scale+1, display.scale+1); //FIXME: the +1 is a bad way to fix bleeding on the edges of tiles
   	display.context.restore();
   }
  }
@@ -115,4 +112,9 @@ display.drawObjects = function() {
  for(var i=0;i<game.objects.length;i++) {
   game.objects[i].draw(w,h);
  }
+};
+
+display.drawLoad = function() {
+	display.context.fillStyle = "rgba(255, 255, 255, " + game.load.timer/100 + ")";
+	display.context.fillRect(0,0,display.width,display.height);
 };

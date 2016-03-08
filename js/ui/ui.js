@@ -8,14 +8,6 @@ ui.init = function() {
  ui.font = {sml: "12px Lucida Console", reg: "14px Lucida Console", lrg: "20px Lucida Console"};
  ui.color = {blue: "#1111FF", white: "#EEEEFF"};
 
- ui.load = {
-	 draw: function() {
-		 display.context.fillStyle = ui.color.white;
-		 display.context.font = ui.font.lrg;
-		 display.context.fillText("Loading...",0,0);
-	 }
- };
-
  ui.menu = {
   openTab: undefined,
   tabs: [

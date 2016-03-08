@@ -48,7 +48,7 @@ object.types.npc.blm.selfInit = function() {
 		message : "This chat system is garbagio. >:(", //TODO: GO AWAY WE DONT NEED YOU ANYMORE
 		step : function() {
 		 this.tweening();
-		 this.aiWorld();
+		 this.aiWorld.step(this);
 		},
 		tweening : proto.tweening,
 		aiWorld : aiWorld,

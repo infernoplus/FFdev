@@ -94,37 +94,6 @@ map.open = function(name) {
 	map.httpGet(map.maps[name]);
 };
 
-//Open map through debug /* DEPRECATED - NEEDS REMOVAL */
-map.openDebug = function(e) {
-  var file = e.target.files[0];
-  if (!file) {
-    return;
-  }
-  map.file = undefined;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var r = e.target.result;
-		map.file = r;
-  };
-  reader.readAsText(file);
-
-  //Recursive timeout
-  var opened = function() {
-		if(map.file === undefined) {
-			setTimeout(function() { opened(); }, 500);
-		}
-	  else {
-			//GOTCHA!
-			map.load(map.file);
-			map.file = undefined;
-			game.loadingMap = false;
-		}
-	};
-
-	game.loadingMap = true;
-	opened();
-};
-
 map.load = function(mapData, file) {
 	map.size = {};
 	map.data = [];
@@ -161,7 +130,7 @@ map.load = function(mapData, file) {
 			team: parseInt(obj[8]),
 			faction: parseInt(obj[9]),
 			aiWorld: mapData.world[obj[10]] ? mapData.world[obj[10]] : (ai.world[obj[10]] ? ai.world[obj[10]] : ai.world.none), //TODO: Warn or error?
-			aiBattle: mapData.battle[obj[11]] ? mapData.battle[obj[11]] : (ai.battle[obj[11]] ? ai.battle[obj[11]] : ai.battle.random), // ^^
+			aiBattle: mapData.battle[obj[11]] ? mapData.battle[obj[11]] : (ai.battle[obj[11]] ? ai.battle[obj[11]] : ai.battle.none), // ^^
 			func: mapData.func[obj[12]] ? mapData.func[obj[12]] : (script.func[obj[12]] ? script.func[obj[12]] : script.func.none)                  // ^^
 		});
 	}
@@ -197,16 +166,16 @@ map.load = function(mapData, file) {
 			type = type[parseType[j]];
 		}
 
-    var npc = type.create({
-			x: parseInt(objData[1]), y: parseInt(objData[2])},
+    var npc = type.create(
+    		{x: parseInt(objData[1]), y: parseInt(objData[2])},
 			parseInt(objData[3]),
 			p.dname,
 			p.variant,
 			p.lvl,
 			p.team,
 			p.faction,
-			p.aiWorld,
-			p.aiBattle,
+			p.aiWorld(),
+			p.aiBattle(),
 			p.func,
 			objData[4]
 		);

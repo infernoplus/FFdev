@@ -7,7 +7,7 @@ player.init = function() {
 };
 
 player.step = function() {
- if(ui.isActive() || game.inBattle())
+ if(game.isLoading() || ui.isActive() || game.inBattle())
 	return;
  var x=0,y=0;
  if(input.keys[87])
