@@ -41,7 +41,13 @@ display.update = function() {
  var x = player.npc.pos.x - parseInt(w/2) + player.npc.anim.tween.x;
  var y = player.npc.pos.y - parseInt(h/2) + player.npc.anim.tween.y;
 
- display.offset = {x: (x*display.scale)-(display.scale/2), y: (y*display.scale)-(display.scale/2)};
+ display.offset = {x: Math.ceil((x*display.scale)-(display.scale/2)), y: Math.ceil((y*display.scale)-(display.scale/2))};
+ 
+ //Disables resampling images when upscaled. Because wtf no.
+ display.context.mozImageSmoothingEnabled = false;
+ display.context.webkitImageSmoothingEnabled = false;
+ display.context.msImageSmoothingEnabled = false;
+ display.context.imageSmoothingEnabled = false; 
 
 };
 
@@ -92,13 +98,13 @@ display.drawMap = function() {
 		display.context.save();
 		display.context.translate((i*display.scale)-display.offset.x, (j*display.scale)-display.offset.y);
 		switch(map.data[i][j].r) {
-	  	case 0 : display.context.rotate(0*Math.PI/180); break;
-	  	case 1 : display.context.rotate(90*Math.PI/180); break;
-	  	case 2 : display.context.rotate(180*Math.PI/180); break;
-	  	case 3 : display.context.rotate(270*Math.PI/180); break;
+		  	case 1 : { display.context.rotate(90*Math.PI/180); break; }
+		  	case 2 : { display.context.rotate(180*Math.PI/180); break; }
+		  	case 3 : { display.context.rotate(270*Math.PI/180); break; }
+		  	default : { display.context.rotate(0*Math.PI/180); break; }
 		}
 		//display.context.drawImage(window.tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, (i*display.scale)-display.offset.x, (j*display.scale)-display.offset.y, display.scale, display.scale);
-  	display.context.drawImage(tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, -(display.scale/2), -(display.scale/2), display.scale+1, display.scale+1); //FIXME: the +1 is a bad way to fix bleeding on the edges of tiles
+  	display.context.drawImage(tile.tileSet, tileOffset.x*tile.res, tileOffset.y*tile.res, tile.res, tile.res, -(Math.ceil(display.scale/2)), -(Math.ceil(display.scale/2)), display.scale, display.scale);
   	display.context.restore();
   }
  }

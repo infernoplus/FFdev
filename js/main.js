@@ -5,7 +5,6 @@
  *  - Rewrite party system to allow rearranging and automatic control swaps
  *  - Rewrite collision so that the player can walk through the party
  *  - Allow special parameters for ai in map editor and parse them correctly on load. EX: target parameter on follow ai.
- *  - Fix texture sampling/texture bleeding when zooming in engine.
  *  - Standardize all player input to the player class
  *  - Pathfinding
  *  - Tileset per map
