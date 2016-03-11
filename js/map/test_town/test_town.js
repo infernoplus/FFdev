@@ -1,7 +1,8 @@
 "use strict";
 
 map.maps.test_town = {
-	file: "js/map/test_town/test_town.map",
+	file: 'js/map/test_town/test_town.map',
+	tileSet: 'img/tile/test.png',
 	//Map specific world ai types
 	world: {
 

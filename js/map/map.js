@@ -146,13 +146,13 @@ map.load = function(mapData, file) {
 	for(var j=0;j<map.size.y;j++) {
 		for(var i=0;i<map.size.x;i++) {
 			var line = ary[k++];
-			var tile = line.split(",");
+			var tl = line.split(",");
 			var evt = line.split("[")[1].split("]")[0].split(",");
 			var resolved = [];
 			for(var l=0;l<evt.length;l++) {
 				resolved.push(map.getEvtPalleteById(evt[l]));
 			}
-			map.data[i][j] = {x: i, y: j, tile: parseInt(tile[0]), r: parseInt(tile[1]), c: tile[2] === "true" ? true : false, evt: evt[0] !== "" ? resolved : []}; //TODO: actually parse EVT
+			map.data[i][j] = {x: i, y: j, tile: parseInt(tl[0]), r: parseInt(tl[1]), c: tl[2] === "true" ? true : false, evt: evt[0] !== "" ? resolved : []}; //TODO: actually parse EVT
 		}
 	}
 
@@ -183,6 +183,9 @@ map.load = function(mapData, file) {
 		);
     game.objects.push(npc);
 	}
+	
+	//Change tile set
+	tile.tileSet = image.get(mapData.tileSet);
 };
 
 map.getObjPalleteById = function(id) {

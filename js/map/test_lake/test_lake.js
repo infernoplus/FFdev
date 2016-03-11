@@ -1,7 +1,8 @@
 "use strict";
 
 map.maps.test_lake = {
-	file: "js/map/test_lake/test_lake.map",
+	file: 'js/map/test_lake/test_lake.map',
+	tileSet: 'img/tile/test.png',
 	//Map specific world ai types
 	world: {
 
