@@ -2,24 +2,24 @@
 
 object.types.npc.blm = {};
 
-/* This is a type so it intializes itself before the engine intializes */
-object.types.npc.blm.selfInit = function() {
- var proto = object.types.npc.proto; //Prototype
- var obj = object.types.npc.blm; //Namespace
+// This anon function initializes a factory for the this type.
+(function() {
+	var proto = object.types.npc.proto; //Prototype
+	var obj = object.types.npc.blm; //Namespace
 
-  /* --- Parameters ---
-  	 pos      :: {x, y} world space position
-  	 look     :: 0 1 2 3 (left right up down) world space facing direction
-     name     :: "string" display name of this actor
-  	 variant  :: 0 - 99 determines what sprite sheet to use. defined by the tileVar function below
-  	 lvl      :: 0 - 99 (used to generate stats and spell lists)
-  	 team     :: 0 - 99 determines if something is frineldy or not. player & allies are 0 and enemies are anything else. enemies on different teams will fight.
-  	 faction  :: 0 - 99 determines the named faction an obj belongs to. player will always be in player faction but allies can be in different factions
-     aiWorld  :: func() ai assigned to this actor when it is navigating the overworld
-     aiBattle :: func() ai assigned to this actor when it enters a battle
-     func     :: func() function of this object when activated
-     id       :: "string" script level id of this actor. used for special shit
-  */
+	  /** --- Parameters ---
+	  	 pos      :: {x, y} world space position
+	  	 look     :: 0 1 2 3 (left right up down) world space facing direction
+	     name     :: "string" display name of this actor
+	  	 variant  :: 0 - 99 determines what sprite sheet to use. defined by the tileVar function below
+	  	 lvl      :: 0 - 99 (used to generate stats and spell lists)
+	  	 team     :: 0 - 99 determines if something is frineldy or not. player & allies are 0 and enemies are anything else. enemies on different teams will fight.
+	  	 faction  :: 0 - 99 determines the named faction an obj belongs to. player will always be in player faction but allies can be in different factions
+	     aiWorld  :: func() ai assigned to this actor when it is navigating the overworld
+	     aiBattle :: func() ai assigned to this actor when it enters a battle
+	     func     :: func() function of this object when activated
+	     id       :: "string" script level id of this actor. used for special shit
+	  **/
 
 	obj.create = function(pos, look, name, variant, lvl, team, faction, aiWorld, aiBattle, func, id) {
 	 var tileVar = function(v) {
@@ -29,7 +29,7 @@ object.types.npc.blm.selfInit = function() {
 		 }
 	 };
 	 return {
-		pos : {x: pos.x, y: pos.y}, //Copy by value
+		pos : {x: pos.x, y: pos.y}, //Explicit copy by value
 		lastPos : {x: pos.x, y: pos.y},
 		look : look,
 		attr : {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10}, //TODO: Generate by level
@@ -45,7 +45,6 @@ object.types.npc.blm.selfInit = function() {
 		id : id,
 		name : name,
 		func : func,
-		message : "This chat system is garbagio. >:(", //TODO: GO AWAY WE DONT NEED YOU ANYMORE
 		step : function() {
 		 this.tweening();
 		 this.aiWorld.step(this);
@@ -60,10 +59,7 @@ object.types.npc.blm.selfInit = function() {
 		draw : proto.draw
 	 };
 	};
-};
-
-object.types.npc.blm.selfInit();
-
+})();
 
 /** Texture and sound assets used by this class **/
 image.collect('img/character/blm.png');

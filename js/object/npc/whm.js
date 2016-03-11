@@ -2,12 +2,12 @@
 
 object.types.npc.whm = {};
 
-/* This is a type so it intializes itself before the engine intializes */
-object.types.npc.whm.selfInit = function() {
+//This anon function initializes a factory for the this type.
+(function() {
  var proto = object.types.npc.proto; //Prototype
  var obj = object.types.npc.whm; //Namespace
 
-  /* --- Parameters ---
+  /** --- Parameters ---
   	 pos      :: {x, y} world space position
   	 look     :: 0 1 2 3 (left right up down) world space facing direction
      name     :: "string" display name of this actor
@@ -19,7 +19,7 @@ object.types.npc.whm.selfInit = function() {
      aiBattle :: func() ai assigned to this actor when it enters a battle
      func     :: func() function of this object when activated
      id       :: "string" script level id of this actor. used for special shit
-  */
+  **/
 
 	obj.create = function(pos, look, name, variant, lvl, team, faction, aiWorld, aiBattle, func, id) {
 	 var tileVar = function(v) {
@@ -44,7 +44,6 @@ object.types.npc.whm.selfInit = function() {
 		id : id,
 		name : name,
 		func : func,
-		message : "This chat system is garbagio. >:(", //TODO: GO AWAY WE DONT NEED YOU ANYMORE
 		step : function() {
 		 this.tweening();
 		 this.aiWorld.step(this);
@@ -59,9 +58,7 @@ object.types.npc.whm.selfInit = function() {
 		draw : proto.draw
 	 };
 	};
-};
-
-object.types.npc.whm.selfInit();
+})();
 
 /** Texture and sound assets used by this class **/
 image.collect('img/character/whm.png');

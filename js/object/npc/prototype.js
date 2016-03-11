@@ -3,8 +3,8 @@
 object.types.npc = {};
 object.types.npc.proto = {};
 
-/* This is a type so it intializes itself before the engine intializes */
-object.types.npc.proto.selfInit = function() {
+//This anon function initializes prototype methods for sub types of this method to use.
+(function() {
  var obj = object.types.npc.proto;
 
  obj.tweening = function() {
@@ -78,18 +78,4 @@ object.types.npc.proto.selfInit = function() {
   this.dead = true;
  };
 
-};
-
-object.types.npc.proto.selfInit();
-
-/*
- object.proto.moving = false;
- object.proto.pos = {x: 0, y: 0};
- object.proto.lastPos = {x: 0, y: 0};
- object.proto.look = 0;
- object.proto.tile = undefined;
- object.proto.anim = {frame: false, moving: false, tween: {x: 0, y: 0}};
- object.proto.dead = false;
- object.proto.stat = {hp: 10, maxHp: 10};
- object.proto.attr = {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10};
- */
+})();

@@ -17,7 +17,6 @@
  *  - Benchmark testing to see how far we go with areas.
  *  - Quests, tracking, game scoped variables, game saving
  *  - Sound
- *  - Fix jank in npc classes
  **/
 
 var requestAnimFrame = (function(){
