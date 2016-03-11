@@ -118,6 +118,7 @@ map.load = function(mapData, file) {
 	var objHeader = parseInt(ary[k++]);
 	for(var i=0;i<objHeader;i++) {
 		var obj = ary[k++].split(",");
+		var aiw = obj[10].split(";");
 		map.obj.push({
 			id: obj[0],
 			name: obj[1],
@@ -129,7 +130,8 @@ map.load = function(mapData, file) {
 			lvl: parseInt(obj[7]),
 			team: parseInt(obj[8]),
 			faction: parseInt(obj[9]),
-			aiWorld: mapData.world[obj[10]] ? mapData.world[obj[10]] : (ai.world[obj[10]] ? ai.world[obj[10]] : ai.world.none), //TODO: Warn or error?
+			aiWorld: mapData.world[[aiw[0]]] ? mapData.world[aiw[0]] : (ai.world[aiw[0]] ? ai.world[aiw[0]] : ai.world.none), //TODO: Warn or error?
+			aiWorldParam: aiw.length > 1 ? aiw[1] : undefined,
 			aiBattle: mapData.battle[obj[11]] ? mapData.battle[obj[11]] : (ai.battle[obj[11]] ? ai.battle[obj[11]] : ai.battle.none), // ^^
 			func: mapData.func[obj[12]] ? mapData.func[obj[12]] : (script.func[obj[12]] ? script.func[obj[12]] : script.func.none)                  // ^^
 		});
@@ -174,10 +176,10 @@ map.load = function(mapData, file) {
 			p.lvl,
 			p.team,
 			p.faction,
-			p.aiWorld(),
+			p.aiWorldParam ? p.aiWorld(p.aiWorldParam) : p.aiWorld(),
 			p.aiBattle(),
 			p.func,
-			objData[4]
+			p.name
 		);
     game.objects.push(npc);
 	}

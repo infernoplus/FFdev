@@ -2,10 +2,12 @@
 04ba9c43def04a6fbc813976a8845b42,exit_bottom_left,0,#FF0000
 fe75e1d1dbcc4b54bd53e16bad9374bf,exit_top_right,0,#00FF00
 12f386ff2f0e478e84424d76004e2477,question_block,0,#0000FF
-3
+5
 4633555686c24b00a06b72f343fa8bba,obj_000,#FF0000,X,npc.blm,Fisher,0,1,0,1,wander,none,fisher_npc_talk
 9196a135811b464fb0dcabf7e2c15ec3,obj_212,#0000FF,X,npc.blm,Baker,1,1,0,1,wander,none,baker_npc_talk
 22ef01422ffb4d268aa6772f87914bfe,obj_156,#000000,X,npc.whm,Luke,0,1,0,1,wander,none,luke_npc_talk
+fc0b2c3547c74d98b65c102c362e4678,leader_npc,#00FFFF,L,npc.blm,Leader,0,1,0,1,wander,none,leader_npc_talk
+4fee604871594712bb99df1a4b965ffb,obj_821,#FFFF00,F,npc.whm,Follower,0,1,0,1,follow;leader_npc,none,follower_npc_talk
 32,32
 248,0,true,[]
 248,0,true,[]
@@ -169,7 +171,7 @@ fe75e1d1dbcc4b54bd53e16bad9374bf,exit_top_right,0,#00FF00
 246,0,true,[]
 246,0,true,[]
 186,0,true,[]
-137,0,true,[12f386ff2f0e478e84424d76004e2477]
+137,0,false,[12f386ff2f0e478e84424d76004e2477]
 203,0,false,[]
 203,0,false,[]
 203,0,false,[]
@@ -1031,8 +1033,10 @@ fe75e1d1dbcc4b54bd53e16bad9374bf,exit_top_right,0,#00FF00
 246,0,true,[]
 246,0,true,[]
 246,0,true,[]
-4
+6
 4633555686c24b00a06b72f343fa8bba,19,16,1,04e6c28ff2a84bba94d824b5778265e6
 9196a135811b464fb0dcabf7e2c15ec3,11,26,1,fa25664736da4f69ab4e534b5548648b
 9196a135811b464fb0dcabf7e2c15ec3,10,29,1,369db15d1d654473a352255040aac528
 22ef01422ffb4d268aa6772f87914bfe,4,2,2,41e00e7743114c018814a566784d8830
+fc0b2c3547c74d98b65c102c362e4678,27,26,1,56cb4c9ae2fb4572a9fbe9e688f0ab43
+4fee604871594712bb99df1a4b965ffb,27,27,1,44a08e49cba645f3a4e7dc146df4cfc1

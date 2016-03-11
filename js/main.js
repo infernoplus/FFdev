@@ -4,7 +4,6 @@
  *  - Rewrite battle system to allow the world state to continue during fights, and instance fights in a way that allows multiple to be going on at once.
  *  - Rewrite party system to allow rearranging and automatic control swaps
  *  - Rewrite collision so that the player can walk through the party
- *  - Allow special parameters for ai in map editor and parse them correctly on load. EX: target parameter on follow ai.
  *  - Standardize all player input to the player class
  *  - Pathfinding
  *  - Tileset per map
