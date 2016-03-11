@@ -483,3 +483,6 @@ ui.draw = function() {
  if(ui.isActive())
   ui.focus.draw();
 };
+
+/** Texture and sound assets used by this class **/
+image.collect('img/ui/menu.png');

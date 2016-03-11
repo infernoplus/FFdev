@@ -21,3 +21,6 @@ map.maps.test_town = {
 		hc_npc_talk: function(t) { ui.openChat(this.name, "I love my children so much! Motherhood is the greatest blessing of all!"); },
 	}
 };
+
+/** Texture and sound assets used by this class **/
+image.collect('img/tile/test.png');

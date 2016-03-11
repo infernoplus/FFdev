@@ -63,3 +63,8 @@ object.types.npc.blm.selfInit = function() {
 };
 
 object.types.npc.blm.selfInit();
+
+
+/** Texture and sound assets used by this class **/
+image.collect('img/character/blm.png');
+image.collect('img/character/blm_red.png');

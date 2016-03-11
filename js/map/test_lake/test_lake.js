@@ -26,3 +26,6 @@ map.maps.test_lake = {
 		follower_npc_talk: function(t) { ui.openChat(this.name, "OMG THIS GUY IS SO COOOOOOOOL XD"); }
 	}
 };
+
+/** Texture and sound assets used by this class **/
+image.collect('img/tile/test.png');

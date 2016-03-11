@@ -6,7 +6,6 @@
  *  - Rewrite collision so that the player can walk through the party
  *  - Standardize all player input to the player class
  *  - Pathfinding
- *  - Create a system where classes define their assets and then image class collects them and loads them all at once without having to explicitly list them.
  *  - Static and special objects
  *  - Factions and hostility
  *  - Inventory
@@ -17,6 +16,8 @@
  *  - Rewrite UI into a framework that uses factory methods to build widgets, allow both touch and keyboard control.
  *  - Benchmark testing to see how far we go with areas.
  *  - Quests, tracking, game scoped variables, game saving
+ *  - Sound
+ *  - Fix jank in npc classes
  **/
 
 var requestAnimFrame = (function(){

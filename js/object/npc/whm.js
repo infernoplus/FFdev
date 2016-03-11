@@ -62,3 +62,6 @@ object.types.npc.whm.selfInit = function() {
 };
 
 object.types.npc.whm.selfInit();
+
+/** Texture and sound assets used by this class **/
+image.collect('img/character/whm.png');

@@ -5,17 +5,21 @@ var image = {};
 image.init = function() {
 	image.cache = {};
 	image.loading = {};
-  image.readyCalls = [];
+	image.readyCalls = [];
 
-	image.load([
-			'img/tile/test.png',
-			'img/character/blm.png',
-			'img/character/blm_red.png',
-			'img/character/pld.png',
-			'img/character/war.png',
-			'img/character/whm.png',
-			'img/ui/menu.png'
-	]);
+	image.load(image.urls);
+};
+
+//Asset classes will call this at load time and define all the textures we will need at runtime.
+//Then when image.init is called it will load everything collected by this method.
+image.urls = [];
+image.collect = function(url) {
+	for(var i=0;i<image.urls.length;i++) {
+		if(image.urls[i] === url) {
+			return;
+		}
+	}
+	image.urls.push(url);
 };
 
 image.load = function (urlOrArr) {
