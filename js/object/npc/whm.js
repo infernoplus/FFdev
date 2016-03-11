@@ -4,8 +4,8 @@ object.types.npc.whm = {};
 
 //This anon function initializes a factory for the this type.
 (function() {
- var proto = object.types.npc.proto; //Prototype
- var obj = object.types.npc.whm; //Namespace
+  var proto = object.types.npc.proto; //Prototype
+  var obj = object.types.npc.whm; //Namespace
 
   /** --- Parameters ---
   	 pos      :: {x, y} world space position
@@ -19,45 +19,45 @@ object.types.npc.whm = {};
      aiBattle :: func() ai assigned to this actor when it enters a battle
      func     :: func() function of this object when activated
      id       :: "string" script level id of this actor. used for special shit
-  **/
+   **/
 
-	obj.create = function(pos, look, name, variant, lvl, team, faction, aiWorld, aiBattle, func, id) {
-	 var tileVar = function(v) {
-	   switch(v) {
-	 		 default : return image.get('img/character/whm.png');
-		 }
-	 };
-	 return {
-		pos : {x: pos.x, y: pos.y}, //Copy by value
-		lastPos : {x: pos.x, y: pos.y},
-		look : look,
-		attr : {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10}, //TODO: Generate by level
-		stat : {hp: 10, maxHp: 10}, //TODO: Generate from attr
-		atk : [{name: "Fast Strike", potency: 50}, {name: "Heavy Strike", potency: 65}], //TODO: Assemble from spell list and level
-		mag : [{name: "Cure I", potency: 170}, {name: "Dia I", potency: 120}], // ^^
-		anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
-		tile : tileVar(variant),
-		team : team,
-		faction : faction,
-		battle : false,
-		dead : false,
-		id : id,
-		name : name,
-		func : func,
-		step : function() {
-		 this.tweening();
-		 this.aiWorld.step(this);
-		},
-		tweening : proto.tweening,
-		aiWorld : aiWorld,
-		aiBattle: aiBattle,
-		move : proto.move,
-		lookAt : proto.lookAt,
-		damage : proto.damage,
-		kill : proto.kill,
-		draw : proto.draw
-	 };
-	};
+  obj.create = function(pos, look, name, variant, lvl, team, faction, aiWorld, aiBattle, func, id) {
+    var tileVar = function(v) {
+      switch(v) {
+        default : return image.get('img/character/whm.png');
+      }
+    };
+    return {
+      pos : {x: pos.x, y: pos.y}, //Copy by value
+      lastPos : {x: pos.x, y: pos.y},
+      look : look,
+      attr : {vit: 10, str: 10, dex: 10, int: 10, mnd: 10, pie: 10}, //TODO: Generate by level
+      stat : {hp: 10, maxHp: 10}, //TODO: Generate from attr
+      atk : [{name: "Fast Strike", potency: 50}, {name: "Heavy Strike", potency: 65}], //TODO: Assemble from spell list and level
+      mag : [{name: "Cure I", potency: 170}, {name: "Dia I", potency: 120}], // ^^
+      anim : {frame: false, animc : 0, moving: false, tween : {x: 0, y: 0}},
+      tile : tileVar(variant),
+      team : team,
+      faction : faction,
+      battle : false,
+      dead : false,
+      id : id,
+      name : name,
+      func : func,
+      step : function() {
+        this.tweening();
+        this.aiWorld.step(this);
+      },
+      tweening : proto.tweening,
+      aiWorld : aiWorld,
+      aiBattle: aiBattle,
+      move : proto.move,
+      lookAt : proto.lookAt,
+      damage : proto.damage,
+      kill : proto.kill,
+      draw : proto.draw
+    };
+  };
 })();
 
 /** Texture and sound assets used by this class **/

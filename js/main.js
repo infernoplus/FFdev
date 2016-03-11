@@ -19,15 +19,13 @@
  *  - Sound
  **/
 
-var requestAnimFrame = (function(){
-    return window.requestAnimationFrame    ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        window.oRequestAnimationFrame      ||
-        window.msRequestAnimationFrame     ||
-        function(callback){
-            window.setTimeout(callback, 33);
-        };
+var requestAnimFrame = (function() {
+  return window.requestAnimationFrame || 
+         window.webkitRequestAnimationFrame ||
+         window.mozRequestAnimationFrame ||
+         window.oRequestAnimationFrame ||
+         window.msRequestAnimationFrame ||
+         function(callback) { window.setTimeout(callback, 33); };
 })();
 
 /*********************************************/
@@ -36,33 +34,34 @@ var main = {};
 
 main.init = function() {
 
- image.init();
- image.onReady( function() {
-  util.init();
-  input.init();
-  tile.init();
-  player.init();
-  ui.init();
-  map.init();
-  object.init();
-  display.init();
-  game.init();
-  main.step();
- });
+  image.init();
+  image.onReady(function() {
+    util.init();
+    input.init();
+    tile.init();
+    player.init();
+    ui.init();
+    map.init();
+    object.init();
+    display.init();
+    game.init();
+    main.step();
+  });
 };
 
 main.lastTime = 0;
 main.step = function() {
- var now = Date.now();
+  var now = Date.now();
 
- if(now - main.lastTime > 33) {
-  main.lastTime = now;
+  if (now - main.lastTime > 33) {
+    main.lastTime = now;
 
-  game.step();
-  display.draw();
- }
+    game.step();
+    display.draw();
+  }
 
- requestAnimFrame(function() { main.step(); });
+  requestAnimFrame(function() { main.step(); });
 };
 
+//Starts the engine
 main.init();

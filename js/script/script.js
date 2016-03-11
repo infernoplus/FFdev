@@ -8,7 +8,7 @@ var script = {};
 script.func = {};
 
 script.func.none = function() {
-	//As the name suggests...
+  //As the name suggests...
 };
 
 /*********************************/
@@ -17,5 +17,5 @@ script.func.none = function() {
 script.evt = {};
 
 script.evt.none = function() {
-	//As the name suggests...
+  //As the name suggests...
 };
