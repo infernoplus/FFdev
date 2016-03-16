@@ -143,11 +143,11 @@ game.startBattle = function(player, enemy) {
         for(var i=0;i<this.teamb.length;i++) {
           this.teamb[i].battle = false; this.teamb[i].kill();
         }
-        ui.endBattle();
+//        ui.endBattle();
         game.battle = undefined;
       }
   };
-  ui.startBattle();
+//  ui.startBattle();
 };
 
 game.inBattle = function() {

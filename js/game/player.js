@@ -7,12 +7,12 @@ player.init = function() {
 };
 
 player.step = function() {
-  if(game.isLoading() || ui.isActive() || game.inBattle())
+  if(game.isLoading() || game.inBattle())
     return;
   var x=0,y=0;
   if(input.keys[87])
     y--;
-  if(input.keys[83])
+  if(input.keys[83]) 
     y++;
   if(input.keys[65])
     x--;

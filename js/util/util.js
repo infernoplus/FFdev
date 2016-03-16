@@ -30,3 +30,9 @@ util.inBounds = function(a,b) {
     return false;
   return true;
 };
+
+util.inBox = function(box,p) {
+  if(p.x < box.a.x || p.y < box.a.y || p.x > box.b.x || p.y > box.b.y)
+    return false;
+  return true;
+};

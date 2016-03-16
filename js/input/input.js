@@ -15,7 +15,6 @@ input.event = function(evt, state) {
     switch(evt.keyCode) {
       case 173 : display.scale = display.scale-1 > 3 ? display.scale-1 : 3; break;
       case 61 : display.scale = display.scale+1 < 32 ? display.scale+1 : 32; break;
-      case 27 : ui.toggleMenu(); break;
     }
   }
 };
@@ -26,7 +25,7 @@ input.mouse = function(evt, state) {
 };
 
 input.mouseMove = function(evt) {
-  input.cursor = {x: evt.layerX, y: evt.layerY};
+  input.cursor = {x: evt.offsetX, y: evt.offsetY};
 };
 
 input.coordToTileScreenSpace = function(x,y) {

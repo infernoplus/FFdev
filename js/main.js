@@ -10,13 +10,14 @@
  *  - Factions and hostility
  *  - Inventory
  *  - Equipment
- *  - Spell and Ability effects
+ *  - Spell and Ability effects + Animations
  *  - Stats and leveling
  *  - Battle AI
- *  - Rewrite UI into a framework that uses factory methods to build widgets, allow both touch and keyboard control.
+ *  - Rewrite UI into a framework that uses factory methods to build widgets, allow both touch and keyboard control. <-- 1
  *  - Benchmark testing to see how far we go with areas.
  *  - Quests, tracking, game scoped variables, game saving
- *  - Sound
+ *  - Sound <-- 2
+ *  - Solve mouse pointer position for all browsers
  **/
 
 var requestAnimFrame = (function() {

@@ -23,9 +23,11 @@ display.draw = function() {
   display.drawLoad();
 
   /* test */
-//input.cursor
 //display.context.fillStyle = "#FF0000";
-//display.context.fillRect(input.cursor.x,input.cursor.y,1,1);
+//display.context.fillRect(input.cursor.x,input.cursor.y,32,1);
+//display.context.fillRect(input.cursor.x,input.cursor.y,-32,1);
+//display.context.fillRect(input.cursor.x,input.cursor.y,1,32);
+//display.context.fillRect(input.cursor.x,input.cursor.y,1,-32);
 };
 
 display.update = function() {
